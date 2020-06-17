@@ -16,9 +16,9 @@ import java.io.IOException;
  *
  * @author Soreilla
  */
-public class HomeForm extends Form {
+public class MenuEvenement extends Form {
 Form current;
-    public HomeForm(){
+    public MenuEvenement(){
         current =this;
         setTitle("Home");
         setLayout(BoxLayout.y());

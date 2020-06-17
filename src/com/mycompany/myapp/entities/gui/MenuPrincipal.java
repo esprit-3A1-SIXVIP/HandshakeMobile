@@ -3,58 +3,114 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-<<<<<<< Updated upstream:src/com/mycompany/myapp/entities/gui/MenuPrincipal.java
 package com.mycompany.myapp.entities.gui;
-=======
-package com.mycompany.myapp;
->>>>>>> Stashed changes:src/com/mycompany/myapp/MenuPrincipal.java
 
+import com.codename1.components.ImageViewer;
+import com.codename1.io.ConnectionRequest;
+import com.codename1.io.NetworkManager;
 import com.mycompany.myapp.entities.gui.Aide.MenuAide;
 import com.mycompany.myapp.entities.gui.Beneficiaire.MenuBen;
 import com.codename1.ui.Button;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.TextField;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.User;
-<<<<<<< Updated upstream:src/com/mycompany/myapp/entities/gui/MenuPrincipal.java
-=======
+import com.mycompany.myapp.gui.MenuEvenement;
 import com.mycompany.myapp.entities.gui.ShakeHub;
->>>>>>> Stashed changes:src/com/mycompany/myapp/MenuPrincipal.java
+import java.io.IOException;
 
 /**
  *
  * @author wajih
  */
-public class MenuPrincipal extends Form{
+public class MenuPrincipal extends Form {
+
     Form current;
+    private ImageViewer iv = null;
+    String cnx = "http://localhost/mobileshakehub/cnx.php";
 
     public MenuPrincipal() {
-                current=this;
-        setTitle("Home");
-        setLayout(BoxLayout.y());
-                User u = new User(2, "junior");
+        current = this;
+        current = new Form("Welcome to Handshake", BoxLayout.y());
+        Image img;
+        try {
+            img = Image.createImage("/handshake.png");
+            iv = new ImageViewer(img);
+            current.add(iv);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
 
-        //BUTTONS
-        add(new Label("Choisissez une option"));
-        Button btnAide = new Button("Gestions des Aides");
-        Button btnBen = new Button("Gestions des Beneficiaires");
-        Button btnShakeHub = new Button("ShakeHub");
-        
-        btnShakeHub.addActionListener(e-> new ShakeHub().start());
-        btnAide.addActionListener(e-> new MenuAide(u).show());
-        btnBen.addActionListener(e-> new MenuBen(u).show());
-        this.add(btnShakeHub);
-<<<<<<< Updated upstream:src/com/mycompany/myapp/entities/gui/MenuPrincipal.java
-        //Tool Bar
-        getToolbar().addCommandToSideMenu("Home", null, e -> new MenuPrincipal().show());
-        getToolbar().addCommandToSideMenu("Gestions des Aides", null, e -> new MenuAide(u).show());
-        getToolbar().addCommandToSideMenu("Gestions des Beneficiaires", null, e -> new MenuBen(u).show());
-        getToolbar().addCommandToSideMenu("ShakeHub", null,  e -> new ShakeHub().start());
-=======
->>>>>>> Stashed changes:src/com/mycompany/myapp/MenuPrincipal.java
-        addAll(btnAide,btnBen);
+        Label l1 = new Label("Email");
+        Label l2 = new Label("Password");
+        TextField login = new TextField("", "Entrez votre Email:");
+        TextField password = new TextField("", "Entrez votre password:");
+        password.setConstraint(TextField.PASSWORD);
+        Button btn1 = new Button("Login");
+        current.addAll(l1, login, l2, password);
+        btn1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                ConnectionRequest requete1 = new ConnectionRequest();
+                requete1.setUrl(cnx);
+                requete1.setPost(false);
+                requete1.addArgument("email", login.getText());
+                requete1.addArgument("password", password.getText());
+                NetworkManager.getInstance()
+                        .addToQueue(requete1);
+                requete1.addResponseListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent evt1) {
+                        String res1 = new String(requete1.getResponseData());
 
+                        if (res1.equals("error")) {
+                            Dialog.show("Error", "Bad credentials", "Ok", null);
+                        } else {
+                            Form S = new Form("HandShake", BoxLayout.y());
+                            User U = new User();
+
+                            U.parse(res1);
+                            //BUTTONS
+                            add(new Label("Choisissez une option"));
+                            Button btnAide = new Button("Gestions des Aides");
+                            Button btnBen = new Button("Gestions des Beneficiaires");
+                            Button btnShakeHub = new Button("ShakeHub");
+                            Button btnEvenement = new Button("Gestions des Evenements");
+                            Button btnArticle = new Button("Gestions des Articles");
+                            btnShakeHub.addActionListener(e -> new ShakeHub().start(U));
+                            btnEvenement.addActionListener(e -> new MenuEvenement().show());
+                            btnArticle.addActionListener(e -> new GestionArticles().show());
+
+                            btnAide.addActionListener(e -> new MenuAide(U).show());
+                            btnBen.addActionListener(e -> new MenuBen(U).show());
+                            S.getToolbar()
+                                    .addMaterialCommandToOverflowMenu("Sign out", FontImage.MATERIAL_BACKSPACE, new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent back
+                                        ) {
+                                            S.removeAll();
+                                            current.showBack();
+
+                                        }
+                                    }
+                                    );
+                            S.addAll(btnAide, btnBen, btnEvenement, btnShakeHub);
+                            if (U.getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}")) 
+                                S.add(btnArticle);
+                            S.show();
+                        }
+
+                    }
+
+                });
+            }
+        });
+        current.add(btn1);
+        current.show();
     }
-
 }
-
