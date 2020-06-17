@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.myapp.gui;
+package com.mycompany.myapp.entities.gui;
 
 import com.codename1.charts.compat.Paint;
 import com.codename1.charts.util.ColorUtil;
