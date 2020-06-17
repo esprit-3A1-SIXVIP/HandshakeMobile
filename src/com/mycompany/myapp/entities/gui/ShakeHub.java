@@ -562,6 +562,7 @@ public class ShakeHub {
                                                                                                     TC.setEditable(true);
                                                                                                     delete1.getAllStyles().setFgColor(softRed);
                                                                                                     C6.add(delete1);
+                                                                                                    if (!(C.getUser().getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}")))
                                                                                                     C6.add(BBan);
                                                                                                     if (U.getEmail().equals(C.getUser().getEmail())) {
                                                                                                         Username1.getAllStyles().setFgColor(darkGreen);
@@ -644,10 +645,12 @@ public class ShakeHub {
                                                                         .equals(QL.getUser().getEmail())) || (U.getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}"))) {
                                                                     TQ.setEditable(true);
                                                                     delete.getAllStyles().setFgColor(softRed);
-                                                                    BBanC.getAllStyles().setFgColor(softRed);
+                                                                    BBanC.getAllStyles().setFgColor(BLACK);
                                                                     if (!C3.contains(delete)) {
                                                                         C3.add(delete);
                                                                     }
+                                                                    if (!(QL.getUser().getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}")))
+                                                                                                    C3.add(BBanC);
                                                                     if (U.getEmail()
                                                                             .equals(QL.getUser().getEmail())) {
                                                                         Username.getAllStyles().setFgColor(darkGreen);
