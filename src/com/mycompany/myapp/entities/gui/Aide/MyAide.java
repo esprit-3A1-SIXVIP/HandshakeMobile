@@ -24,7 +24,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.Aide;
 import com.mycompany.myapp.entities.User;
 import com.mycompany.myapp.entities.gui.Beneficiaire.MenuBen;
-import com.mycompany.myapp.entities.gui.MenuAideBen;
+import com.mycompany.myapp.entities.gui.MenuPrincipal;
 import com.mycompany.myapp.entities.services.ServiceAide;
 import java.util.ArrayList;
 
@@ -114,7 +114,7 @@ public class MyAide extends Form{
     }
 }, 4);
         //Tool Bar
-        getToolbar().addCommandToSideMenu("Home", null, e -> new MenuAideBen().show());
+        getToolbar().addCommandToSideMenu("Home", null, e -> new MenuPrincipal().show());
         getToolbar().addCommandToSideMenu("Gestions des Aides", null, e -> new MenuAide(u).show());
         getToolbar().addCommandToSideMenu("Gestions des Beneficiaires", null, e -> new MenuBen(u).show());
     }

@@ -11,7 +11,7 @@ import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.User;
 import com.mycompany.myapp.entities.gui.Aide.MenuAide;
-import com.mycompany.myapp.entities.gui.MenuAideBen;
+import com.mycompany.myapp.entities.gui.MenuPrincipal;
 
 /**
  *
@@ -38,7 +38,7 @@ public class MenuBen extends Form{
         btnMyBen.addActionListener(e-> new MyBen(u).show());
         
         //Tool Bar
-        getToolbar().addCommandToSideMenu("Home", null, e -> new MenuAideBen().show());
+        getToolbar().addCommandToSideMenu("Home", null, e -> new MenuPrincipal().show());
         getToolbar().addCommandToSideMenu("Gestions des Aides", null, e -> new MenuAide(u).show());
         getToolbar().addCommandToSideMenu("Gestions des Beneficiaires", null, e -> new MenuBen(u).show());
 

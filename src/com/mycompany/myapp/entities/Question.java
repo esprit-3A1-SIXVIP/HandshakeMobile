@@ -206,4 +206,20 @@ public class Question {
         });
     }
 
+    public void ban(User user) {
+String cnxup = "http://localhost/mobileshakehub/ban.php";
+        ConnectionRequest rb = new ConnectionRequest();
+        rb.setUrl(cnxup);
+        rb.setPost(false);
+        rb.addArgument("id", user.getUserId() + "");
+        NetworkManager.getInstance().addToQueue(rb);
+
+        rb.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evtq) {
+                Dialog.show("Banned User", ("You have successfully banned "+user.getLogin()), null, TYPE_INFO, null, 2000);
+
+            }
+        });    }
+
 }

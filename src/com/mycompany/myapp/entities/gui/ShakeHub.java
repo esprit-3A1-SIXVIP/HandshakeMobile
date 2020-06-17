@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.myapp.entities.gui;
+package com.mycompany.myapp.gui;
 
 import com.codename1.charts.compat.Paint;
 import com.codename1.charts.util.ColorUtil;
@@ -161,8 +161,9 @@ public class ShakeHub {
                         } else {
                             Form S = new Form("Welcome to the ShakeHub", BoxLayout.y());
                             User U = new User();
+
                             U.parse(res1);
-                            if (U.isAccesShakeHub() == 1 || U.getRole().equals("admin")) {
+                            if (U.isAccesShakeHub() == 1 || U.getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}")) {
 
                                 try {
                                     Label imageDialogue;
@@ -219,19 +220,19 @@ public class ShakeHub {
                                                             String resU = new String(rgetuser.getResponseData());
 
                                                             User user = new User();
-
+                                                            
                                                             user.parse(resU);
-
+                                                            
                                                             QL.setUser(user);
-
+                                                            System.out.println(QL);
                                                             Label Username = new Label(QL.getUser().getLogin());
                                                             try {
-                                                                ImageViewer profilQ;
-                                                                if (!(QL.getUser().getProfil().equals(""))) {
+                                                                Label profilQ;
+                                                                if (!(QL.getUser().getProfil().equals(null))) {
 
-                                                                    profilQ = new ImageViewer(Image.createImage(QL.getUser().getProfil()).scaled(300, 300));
+                                                                    profilQ = new Label(Image.createImage(QL.getUser().getProfil()).scaled(300, 300));
                                                                 } else {
-                                                                    profilQ = new ImageViewer(Image.createImage("/usericon.png").scaled(300, 300));
+                                                                    profilQ = new Label(Image.createImage("/usericon.png").scaled(300, 300));
                                                                 }
                                                                 profilQ.getAllStyles().setPadding(0, 0, 0, 0);
                                                                 TextArea TQ = new TextArea(QL.getTexteQuestion());
@@ -366,17 +367,17 @@ public class ShakeHub {
                                                                                         TCS.remove();
                                                                                         SubmitC.remove();
                                                                                         try {
-                                                                                            ImageViewer profilC;
+                                                                                            Label profilC;
                                                                                             if (!(U.getProfil().equals(""))) {
 
-                                                                                                profilC = new ImageViewer(Image.createImage(U.getProfil()).scaled(300, 300));
+                                                                                                profilC = new Label(Image.createImage(U.getProfil()).scaled(300, 300));
                                                                                             } else {
-                                                                                                profilC = new ImageViewer(Image.createImage("/usericon.png").scaled(300, 300));
+                                                                                                profilC = new Label(Image.createImage("/usericon.png").scaled(300, 300));
                                                                                             }
                                                                                             profilC.getAllStyles().setPadding(0, 0, 0, 0);
                                                                                             TextArea TCC = new TextArea(TCS.getText());
-                                                                                            TCC.getAllStyles().setFgColor(darkBlue);
-                                                                                            TCC.getAllStyles().setBgColor(darkYellow);
+                                                                                            TCC.getAllStyles().setFgColor(BLACK);
+                                                                                            TCC.getAllStyles().setBgColor(CBGBlue);
                                                                                             Label ScoreC = new Label("             0");
 
                                                                                             Button upvoteC = new Button("Shake Up");
@@ -494,12 +495,12 @@ public class ShakeHub {
 
                                                                                             Label Username1 = new Label(C.getUser().getLogin());
                                                                                             try {
-                                                                                                ImageViewer profilC;
+                                                                                                Label profilC;
                                                                                                 if (!(C.getUser().getProfil().equals(""))) {
 
-                                                                                                    profilC = new ImageViewer(Image.createImage(C.getUser().getProfil()).scaled(300, 300));
+                                                                                                    profilC = new Label(Image.createImage(C.getUser().getProfil()).scaled(300, 300));
                                                                                                 } else {
-                                                                                                    profilC = new ImageViewer(Image.createImage("/usericon.png").scaled(300, 300));
+                                                                                                    profilC = new Label(Image.createImage("/usericon.png").scaled(300, 300));
                                                                                                 }
 
                                                                                                 TextArea TC = new TextArea(C.getTexteCommentaire());
@@ -555,11 +556,13 @@ public class ShakeHub {
 
                                                                                                 Label date1 = new Label(C.getDateCommentaire() + "");
                                                                                                 Container C6 = BoxLayout.encloseYCenter(upvote1, Score1, downvote1);
-
-                                                                                                if ((U.getEmail().equals(C.getUser().getEmail())) || (U.getRole().equals("admin"))) {
+                                                                                                Button BBan = new Button("Ban User");
+                                                                                                BBan.getAllStyles().setFgColor(BLACK);
+                                                                                                if ((U.getEmail().equals(C.getUser().getEmail())) || (U.getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}"))) {
                                                                                                     TC.setEditable(true);
                                                                                                     delete1.getAllStyles().setFgColor(softRed);
                                                                                                     C6.add(delete1);
+                                                                                                    C6.add(BBan);
                                                                                                     if (U.getEmail().equals(C.getUser().getEmail())) {
                                                                                                         Username1.getAllStyles().setFgColor(darkGreen);
                                                                                                     }
@@ -613,6 +616,12 @@ public class ShakeHub {
                                                                                                         C4.remove();
                                                                                                     }
                                                                                                 });
+                                                                                                BBan.addLongPressListener(new ActionListener() {
+                                                                                                    @Override
+                                                                                                    public void actionPerformed(ActionEvent evtud) {
+                                                                                                        QL.ban(QL.getUser());  
+                                                                                                    }
+                                                                                                });
                                                                                                 S.revalidate();
 
                                                                                             } catch (IOException ex) {
@@ -629,11 +638,13 @@ public class ShakeHub {
                                                                     j = res2.indexOf("Id Commentaire: ", j + 1);
 
                                                                 }
-
+                                                                Button BBanC = new Button("Ban User");
+                                                                BBanC.getAllStyles().setFgColor(BLACK);
                                                                 if ((U.getEmail()
-                                                                        .equals(QL.getUser().getEmail())) || (U.getRole().equals("admin"))) {
+                                                                        .equals(QL.getUser().getEmail())) || (U.getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}"))) {
                                                                     TQ.setEditable(true);
                                                                     delete.getAllStyles().setFgColor(softRed);
+                                                                    BBanC.getAllStyles().setFgColor(softRed);
                                                                     if (!C3.contains(delete)) {
                                                                         C3.add(delete);
                                                                     }
@@ -655,6 +666,14 @@ public class ShakeHub {
                                                                     @Override
                                                                     public void actionPerformed(ActionEvent evtud) {
                                                                         QL.delete(QL.getQuestionId(), user.getUserId());
+                                                                        C1.remove();
+                                                                    }
+                                                                });
+                                                                BBanC.addLongPressListener(new ActionListener() {
+                                                                    @Override
+                                                                    public void actionPerformed(ActionEvent evtud) {
+
+                                                                        QL.ban(QL.getUser());
                                                                         C1.remove();
                                                                     }
                                                                 });
@@ -720,12 +739,12 @@ public class ShakeHub {
                                                             Dialog.show("Success!", ("Thank you for submitting a Question on ShakeHub " + U.getPrenomUser() + " " + U.getNomUser() + " !"), null, TYPE_INFO, null, 2000);
                                                             Label UsernameQ = new Label(U.getLogin());
                                                             try {
-                                                                ImageViewer profilQ;
+                                                                Label profilQ;
                                                                 if (!(U.getProfil().equals(""))) {
 
-                                                                    profilQ = new ImageViewer(Image.createImage(U.getProfil()).scaled(300, 300));
+                                                                    profilQ = new Label(Image.createImage(U.getProfil()).scaled(300, 300));
                                                                 } else {
-                                                                    profilQ = new ImageViewer(Image.createImage("/usericon.png").scaled(300, 300));
+                                                                    profilQ = new Label(Image.createImage("/usericon.png").scaled(300, 300));
                                                                 }
                                                                 profilQ.getAllStyles().setPadding(0, 0, 0, 0);
                                                                 TextArea TQ = new TextArea(TQS.getText());
@@ -786,12 +805,12 @@ public class ShakeHub {
                                                 Label loginp = new Label("Login: " + U.getLogin());
                                                 Label numtel = new Label("Téléphone: " + U.getTelephone());
                                                 Label adresse = new Label("Adresse: " + U.getRue() + ", " + U.getVille() + ", " + U.getPays());
-                                                ImageViewer iv;
+                                                Label iv;
 
                                                 if (!(U.getProfil().equals(""))) {
-                                                    iv = new ImageViewer(Image.createImage(U.getProfil()).scaled(300, 300));
+                                                    iv = new Label(Image.createImage(U.getProfil()).scaled(300, 300));
                                                 } else {
-                                                    iv = new ImageViewer(Image.createImage("/usericon.png").scaled(300, 300));
+                                                    iv = new Label(Image.createImage("/usericon.png").scaled(300, 300));
                                                 }
                                                 profile.addAll(iv, nomprenom, mailaddress, loginp, numtel, adresse);
 
