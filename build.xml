@@ -5,8 +5,8 @@
     To learn more about Codename One go to https://www.codenameone.com/
     -->
         
-    <project name="PI_Mobile" default="default" basedir=".">
-    <description>Builds, tests, and runs the project PI_Mobile.</description>
+    <project name="handshakemobile" default="default" basedir=".">
+    <description>Builds, tests, and runs the project handshakemobile.</description>
     <import file="nbproject/build-impl.xml"/>
     <property file="codenameone_settings.properties"/>
     <property name="automated" value="false" />
