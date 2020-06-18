@@ -5,6 +5,8 @@
  */
 package com.mycompany.myapp.entities.gui;
 
+import PIDEV.GUI.BaseForm;
+import PIDEV.GUI.MenuRefuge;
 import com.codename1.components.ImageViewer;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.NetworkManager;
@@ -95,7 +97,7 @@ public class MenuPrincipal extends Form {
                 }
                 imageDialogue.setText(("Logged in successfully as " + U.getPrenomUser() + " " + U.getNomUser()) + " !");
                 imageDialogue.setTextPosition(Label.BOTTOM);
-                Dialog.show("Welcome to the ShakeHub", imageDialogue, null, TYPE_INFO, null, 2000);
+                Dialog.show("Welcome to Handshake Mobile", imageDialogue, null, TYPE_INFO, null, 2000);
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -106,10 +108,11 @@ public class MenuPrincipal extends Form {
                             Button btnShakeHub = new Button("ShakeHub");
                             Button btnEvenement = new Button("Gestions des Evenements");
                             Button btnArticle = new Button("Gestions des Articles");
+                            Button btnRefuges = new Button("Gestions des Refuges");
                             btnShakeHub.addActionListener(e -> new ShakeHub().start(U));
                             btnEvenement.addActionListener(e -> new MenuEvenement().show());
                             btnArticle.addActionListener(e -> new GestionArticles().show());
-
+                            btnRefuges.addActionListener(e -> new MenuRefuge().show());
                             btnAide.addActionListener(e -> new MenuAide(U).show());
                             btnBen.addActionListener(e -> new MenuBen(U).show());
                             S.getToolbar()
@@ -123,7 +126,7 @@ public class MenuPrincipal extends Form {
                                         }
                                     }
                                     );
-                            S.addAll(btnAide, btnBen, btnEvenement, btnShakeHub);
+                            S.addAll(btnAide, btnBen, btnEvenement, btnRefuges, btnShakeHub);
                             
                             S.add(btnArticle);
                             S.show();
