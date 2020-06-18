@@ -10,5 +10,9 @@ package com.myApp.Utils;
  * @author amisa
  */
 public class Statics {
-        public static final String  BASE_URL="http://localhost/HandshakeWebSym-Samyra/web/app_dev.php/";
+public static final String BASE_URL="http://localhost/HandshakeWebSym/web/app_dev.php";
+public static final String UPDATE_URL="http://127.0.0.1:8000/taskUpdate/";
+        public static final String SHOW_URL="http://127.0.0.1:8000/taskShow/";
+       
+        public static final String DELETE_URL="http://127.0.0.1:8000/delete/";
 }

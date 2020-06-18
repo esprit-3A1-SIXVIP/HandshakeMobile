@@ -45,7 +45,7 @@ public class ServiceRefuge {
     }
 
     public boolean addRefuge(Refuge t) {
-        String url = Statics.BASE_URL + "new/don?rueRefuge=" + t.getRueRefuge() + "&villeRefuge=" + t.getVilleRefuge() + "&paysRefuge=" + t.getPaysRefuge() + "&disponibiliteRefuge=" + t.getDisponibiliteRefuge() + "&capaciteRefuge=" + t.getCapaciteRefuge() + "&dateDebutRefuge=" + t.getDate_debut() + "&dateFinRefuge=" + t.getDate_fin() + "&latitude=" + t.getLatitude() + "&longitude=" + t.getLongitude();
+        String url = Statics.BASE_URL + "/new/don?rueRefuge=" + t.getRueRefuge() + "&villeRefuge=" + t.getVilleRefuge() + "&paysRefuge=" + t.getPaysRefuge() + "&disponibiliteRefuge=" + t.getDisponibiliteRefuge() + "&capaciteRefuge=" + t.getCapaciteRefuge() + "&dateDebutRefuge=" + t.getDate_debut() + "&dateFinRefuge=" + t.getDate_fin() + "&latitude=" + t.getLatitude() + "&longitude=" + t.getLongitude();
         req.setUrl(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -132,7 +132,7 @@ public class ServiceRefuge {
     
 
     public ArrayList<Refuge> getAllRefuge() {
-        String url = Statics.BASE_URL + "don/all";
+        String url = Statics.BASE_URL + "/don/all";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -147,7 +147,7 @@ public class ServiceRefuge {
 
     public ArrayList<Refuge> getList2() {
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/HandshakeWebSym-Samyra/web/app_dev.php/don/all");
+        con.setUrl("http://localhost/HandshakeWebSym/web/app_dev.php/don/all");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -172,7 +172,7 @@ public class ServiceRefuge {
        return resultOK;
     }
     public boolean deleteRefuge(Refuge t) {
-        String url = Statics.BASE_URL + "don/delete_don/" + t.getDonId();
+        String url = Statics.BASE_URL + "/don/delete_don/" + t.getDonId();
                req.setUrl(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override

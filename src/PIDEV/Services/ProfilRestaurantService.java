@@ -87,7 +87,7 @@ public class ProfilRestaurantService {
     
     public ArrayList<Etablissement> getList2(int id){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/HandshakeWebSym-Samyra/web/app_dev.php/don/don_show/"+"donid="+id);  
+        con.setUrl("http://localhost/HandshakeWebSym/web/app_dev.php/don/don_show/"+"donid="+id);  
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
