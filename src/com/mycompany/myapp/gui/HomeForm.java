@@ -9,7 +9,6 @@ import com.codename1.ui.Button;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
-import com.mycompany.myapp.entities.User;
 import java.io.IOException;
 
 
@@ -23,7 +22,7 @@ Form current;
         current =this;
         setTitle("Home");
         setLayout(BoxLayout.y());
-            User u = new User(4, "xxx");
+        
         add(new Label("Choose an option"));
         Button btnAddEvenement = new Button("Creer Evenement");
         Button btnListEvenements = new Button("Listes des Evenements");
