@@ -21,14 +21,16 @@ import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BoxLayout;
-import com.mycompany.myapp.services.ServiceEvenement;
-import com.mycompany.myapp.entities.Evenement;
+import com.mycompany.myapp.services.*;
+import com.mycompany.myapp.entities.*;
 import java.io.*;
 
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Graphics;
+import com.codename1.ui.Label;
 import static com.codename1.ui.TextArea.URL;
 import com.codename1.ui.TextField;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.list.DefaultListModel;
 import com.codename1.ui.list.MultiList;
 import com.codename1.ui.plaf.Style;
@@ -54,6 +56,7 @@ FontImage p = FontImage.createMaterial(FontImage.MATERIAL_PORTRAIT,s);
         EncodedImage placeholder = EncodedImage.createFromImage(p.scaled(p.getWidth() * 3, p.getHeight() * 4), false);
         
         ArrayList<Map<String, Object>> data = new ArrayList<>();
+  
         for(Evenement e: ServiceEvenement.getInstance().getAllEvenements()){
         
             data.add(createListEntry(e.getTitle(), formater.format(e.getStart()), "http://localhost/hdtest1.1/web/uploads/"+ e.getImage(),e.getImage(), Integer.toString(e.getEvenementId())));
@@ -61,6 +64,7 @@ FontImage p = FontImage.createMaterial(FontImage.MATERIAL_PORTRAIT,s);
         }
         
         DefaultListModel<Map<String, Object>> model = new DefaultListModel<>(data);
+
 MultiList ml = new MultiList(model);
 
 ml.getUnselectedButton().setIconName("icon_URLImage");
@@ -70,7 +74,7 @@ ml.getSelectedButton().setIcon(placeholder);
 
 
 ml.addActionListener(l->{
-Form f =new Form("B");
+Form f =new Form("Gestion des évènements", new BoxLayout(BoxLayout.Y_AXIS));
 
 
 Map<String, Object> value = (Map<String, Object>)ml.getSelectedItem();
@@ -83,6 +87,7 @@ for (Evenement e:ServiceEvenement.getInstance().getAllEvenements()){
     {
         Button update = new Button("Modifier");
           Button delete = new Button("Supprimer");
+          Button consulter = new Button("Consulter participants");
                TextField tftitle = new TextField(e.getTitle(),"Titre de l'évènement");
         TextField tflieuevenement = new TextField(e.getLieuEvenement(),"Lieu de l'évènement");
            Picker tfstart = new Picker();
@@ -117,6 +122,27 @@ for (Evenement e:ServiceEvenement.getInstance().getAllEvenements()){
             
             
         });
+        consulter.addActionListener(t->{
+            Form liste=new Form("Liste participants",new BoxLayout(BoxLayout.Y_AXIS));
+          
+                 
+   
+                            for(User u:ServiceUser.getInstance().getParticipants(e.getEvenementId())){
+            
+                   System.out.println("le nom de l'utilisateur participant est:" +u.getUsername());
+                   Label nom = new Label(u.getUsername());
+                  
+                   liste.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, uu-> previous.showBack());
+                   liste.add(nom);
+                   liste.show();
+                            }
+                   
+            
+            
+            
+            
+            
+        });
                         
                         f.add(tftitle);
                         f.add(tfstart);
@@ -128,12 +154,13 @@ for (Evenement e:ServiceEvenement.getInstance().getAllEvenements()){
                         f.add(tfcode);
                         f.add(update);
                         f.add(delete);
+                        f.add(consulter);
     }
    
-    
-}
-f.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e-> previous.showBack());
+    f.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, pppp-> previous.showBack());
 f.show();
+}
+
 });
 
 
@@ -160,5 +187,6 @@ getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e-> 
       
       
 }
+
     
 }

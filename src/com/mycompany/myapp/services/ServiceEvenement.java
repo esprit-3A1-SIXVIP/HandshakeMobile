@@ -10,11 +10,15 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.io.JSONParser;
+
 import com.codename1.ui.CN;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.myapp.entities.Evenement;
+import com.mycompany.myapp.entities.User;
 import com.mycompany.myapp.utils.Statics;
 
+
+        
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -59,6 +63,7 @@ public class ServiceEvenement {
       return resultOK;
   }
     public ArrayList<Evenement> parseEvenements(String jsonText){
+        
         try {
             evenements=new ArrayList<>();
             JSONParser j = new JSONParser();
@@ -141,4 +146,19 @@ public class ServiceEvenement {
      
         
      }
+     public boolean participer(Evenement t,int id){
+            String url = Statics.PARTICIPATION_URL +  "?evenementId=" +t.getEvenementId()+"&id="+id ;
+             req.setUrl(url);
+         req.addResponseListener((a)-> {
+           String str = new String(req.getResponseData());
+             System.out.println(str);//Affichage de la réponse serveur sur la console
+            System.out.println("id modif est"+t.getEvenementId());
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return true;
+            
+         
+     }
+    
+     
 }
