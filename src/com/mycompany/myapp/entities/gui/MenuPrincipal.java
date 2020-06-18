@@ -124,8 +124,8 @@ public class MenuPrincipal extends Form {
                                     }
                                     );
                             S.addAll(btnAide, btnBen, btnEvenement, btnShakeHub);
-                            if (U.getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}")) 
-                                S.add(btnArticle);
+                            
+                            S.add(btnArticle);
                             S.show();
                         }
 

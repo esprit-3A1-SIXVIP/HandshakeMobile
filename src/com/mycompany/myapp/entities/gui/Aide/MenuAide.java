@@ -40,7 +40,7 @@ public class MenuAide extends Form{
         btnStat.addActionListener(e-> new StatAide(u).show());
         
         //Tool Bar
-        getToolbar().addCommandToSideMenu("Home", null, e -> new MenuPrincipal().show());
+        getToolbar().addCommandToSideMenu("Home", null, e -> new MenuPrincipal());
         getToolbar().addCommandToSideMenu("Gestions des Aides", null, e -> new MenuAide(u).show());
         getToolbar().addCommandToSideMenu("Gestions des Beneficiaires", null, e -> new MenuBen(u).show());
 

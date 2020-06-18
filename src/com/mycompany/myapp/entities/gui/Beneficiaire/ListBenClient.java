@@ -84,7 +84,7 @@ public class ListBenClient extends Form{
                             add(ct);
                              }
         //Tool Bar
-        getToolbar().addCommandToSideMenu("Home", null, e -> new MenuPrincipal().show());
+        getToolbar().addCommandToSideMenu("Home", null, e -> new MenuPrincipal());
         getToolbar().addCommandToSideMenu("Gestions des Aides", null, e -> new MenuAide(u).show());
         getToolbar().addCommandToSideMenu("Gestions des Beneficiaires", null, e -> new MenuBen(u).show());
     }

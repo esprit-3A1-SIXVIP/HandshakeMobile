@@ -100,7 +100,6 @@ public class Question {
     public void parse(String s) {
         try {
         this.questionId=(Integer.parseInt(s.substring((s.indexOf("questionId=") + "questionId=".length()), s.indexOf(",texteQuestion="))));
-        
         this.texteQuestion=StringUtil.replaceAll(s.substring(((s.indexOf("texteQuestion=")) + ("texteQuestion=".length())), (s.indexOf(",dateQuestion="))), "'", "`");
         
             this.dateQuestion=(new SimpleDateFormat("yyyy-MM-dd").parse(s.substring((s.indexOf("dateQuestion=") + "dateQuestion=".length()), s.indexOf(",userId="))));
@@ -109,6 +108,7 @@ public class Question {
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
         }
+        System.out.println(this);
     }
 
     public void update(int id, String TQ, long uid) {

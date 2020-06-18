@@ -32,6 +32,7 @@ import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import static com.codename1.ui.Dialog.TYPE_INFO;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
@@ -40,6 +41,7 @@ import com.codename1.ui.List;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.events.ComponentStateChangeEvent;
@@ -70,6 +72,7 @@ public class ShakeHub {
     private Form current;
     private Resources theme;
     int i, j;
+    private EncodedImage ec = null;
 
     public ShakeHub() {
     }
@@ -122,22 +125,7 @@ public class ShakeHub {
 
         Form S = new Form("Welcome to the ShakeHub", BoxLayout.y());
 
-        
         if (U.isAccesShakeHub() == 1 || U.getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}")) {
-
-            try {
-                Label imageDialogue;
-                if (!(U.getProfil().equals(""))) {
-                    imageDialogue = new Label(Image.createImage(U.getProfil()).scaled(300, 300));
-                } else {
-                    imageDialogue = new Label(Image.createImage("/usericon.png").scaled(300, 300));
-                }
-                imageDialogue.setText(("Logged in successfully as " + U.getPrenomUser() + " " + U.getNomUser()) + " !");
-                imageDialogue.setTextPosition(Label.BOTTOM);
-                Dialog.show("Welcome to the ShakeHub", imageDialogue, null, TYPE_INFO, null, 2000);
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-            }
 
             ConnectionRequest requete2 = new ConnectionRequest();
             requete2.setUrl(cnx1);
@@ -163,6 +151,7 @@ public class ShakeHub {
                         requeteQuestion.addArgument("uid", uid);
                         NetworkManager.getInstance()
                                 .addToQueue(requeteQuestion);
+                        
                         requeteQuestion.addResponseListener(new ActionListener() {
                             public void actionPerformed(ActionEvent evt3) {
                                 String resQ = new String(requeteQuestion.getResponseData());
@@ -184,13 +173,20 @@ public class ShakeHub {
                                         user.parse(resU);
 
                                         QL.setUser(user);
-                                        System.out.println(QL);
+                                        
                                         Label Username = new Label(QL.getUser().getLogin());
                                         try {
                                             Label profilQ;
-                                            if (!(QL.getUser().getProfil().equals(null))) {
+                                            
 
-                                                profilQ = new Label(Image.createImage(QL.getUser().getProfil()).scaled(300, 300));
+                                            
+                                            try {
+                                                ec = EncodedImage.create("/load.jpg");
+                                            } catch (IOException ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
+                                            if (!(QL.getUser().getProfil().equals(null))) {
+                                                profilQ = new Label(URLImage.createToStorage(ec, "http://localhost/mobileshakehub/" + QL.getUser().getProfil(), "http://localhost/mobileshakehub/" + QL.getUser().getProfil(), URLImage.RESIZE_SCALE));
                                             } else {
                                                 profilQ = new Label(Image.createImage("/usericon.png").scaled(300, 300));
                                             }
@@ -322,7 +318,6 @@ public class ShakeHub {
                                                                     Dialog.show("Success!", ("Thank you for submitting a Reply on ShakeHub " + U.getPrenomUser() + " " + U.getNomUser()) + " !", null, TYPE_INFO, null, 2000);
                                                                     Label UsernameC = new Label(U.getLogin());
                                                                     String resSubmitC = new String(requeteSubmitC.getResponseData());
-                                                                    System.out.println(resSubmitC);
 
                                                                     TCS.remove();
                                                                     SubmitC.remove();
@@ -330,7 +325,16 @@ public class ShakeHub {
                                                                         Label profilC;
                                                                         if (!(U.getProfil().equals(""))) {
 
-                                                                            profilC = new Label(Image.createImage(U.getProfil()).scaled(300, 300));
+                                                                            try {
+                                                                                ec = EncodedImage.create("/load.jpg");
+                                                                            } catch (IOException ex) {
+                                                                                System.out.println(ex.getMessage());
+                                                                            }
+                                                                            if (!(U.getProfil().equals(""))) {
+                                                                                profilC = new Label(URLImage.createToStorage(ec, "http://localhost/mobileshakehub/" + U.getProfil(), "http://localhost/mobileshakehub/" + U.getProfil(), URLImage.RESIZE_SCALE));
+                                                                            } else {
+                                                                                profilC = new Label(Image.createImage("/usericon.png").scaled(300, 300));
+                                                                            }
                                                                         } else {
                                                                             profilC = new Label(Image.createImage("/usericon.png").scaled(300, 300));
                                                                         }
@@ -454,14 +458,23 @@ public class ShakeHub {
                                                                         C.setUser(userC);
 
                                                                         Label Username1 = new Label(C.getUser().getLogin());
-                                                                        try {
-                                                                            Label profilC;
-                                                                            if (!(C.getUser().getProfil().equals(""))) {
 
-                                                                                profilC = new Label(Image.createImage(C.getUser().getProfil()).scaled(300, 300));
-                                                                            } else {
-                                                                                profilC = new Label(Image.createImage("/usericon.png").scaled(300, 300));
-                                                                            }
+                                                                        try {
+
+                                                                            Label profilC = new Label(Image.createImage("/usericon.png").scaled(300, 300));
+                                                                            
+
+                                                                                try {
+                                                                                    ec = EncodedImage.create("/load.jpg");
+                                                                                } catch (IOException ex) {
+                                                                                    System.out.println(ex.getMessage());
+                                                                                }
+                                                                                if (!(C.getUser().getProfil().equals(""))) {
+                                                                                    profilC = new Label(URLImage.createToStorage(ec, "http://localhost/mobileshakehub/" + C.getUser().getProfil(), "http://localhost/mobileshakehub/" + C.getUser().getProfil(), URLImage.RESIZE_SCALE));
+                                                                                } else {
+                                                                                    profilC = new Label(Image.createImage("/usericon.png").scaled(300, 300));
+                                                                                }
+                                                                            
 
                                                                             TextArea TC = new TextArea(C.getTexteCommentaire());
                                                                             TC.getAllStyles().setFgColor(BLACK);
@@ -522,7 +535,7 @@ public class ShakeHub {
                                                                                 TC.setEditable(true);
                                                                                 delete1.getAllStyles().setFgColor(softRed);
                                                                                 C6.add(delete1);
-                                                                                if (!(C.getUser().getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}"))) {
+                                                                                if ((U.getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}"))) {
                                                                                     C6.add(BBan);
                                                                                 }
                                                                                 if (U.getEmail().equals(C.getUser().getEmail())) {
@@ -607,10 +620,9 @@ public class ShakeHub {
                                                 TQ.setEditable(true);
                                                 delete.getAllStyles().setFgColor(softRed);
                                                 BBanC.getAllStyles().setFgColor(BLACK);
-                                                if (!C3.contains(delete)) {
-                                                    C3.add(delete);
-                                                }
-                                                if (!(QL.getUser().getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}"))) {
+                                                C3.add(delete);
+                         
+                                                 if ((U.getRole().equals("a:1:{i:0;s:5:\"ADMIN\";}"))) {
                                                     C3.add(BBanC);
                                                 }
                                                 if (U.getEmail()
@@ -646,7 +658,8 @@ public class ShakeHub {
                                             System.out.println(ex.getMessage());
                                         }
                                     }
-                                });
+                                }
+                                );
 
                             }
                         }
@@ -659,7 +672,6 @@ public class ShakeHub {
 
             }
             );
-
         } else {
             Dialog.show("Banni du ShakeHub", (U.getPrenomUser() + " " + U.getNomUser() + ", votre compte a été suspendu du ShakeHub en raison de votre transgression des règles de celui-ci."), null, TYPE_INFO, null, 5000);
         }
@@ -705,8 +717,14 @@ public class ShakeHub {
                                         Label UsernameQ = new Label(U.getLogin());
                                         try {
                                             Label profilQ;
-                                            if (!(U.getProfil().equals(""))) {
-
+                                            try {
+                                                ec = EncodedImage.create("/load.jpg");
+                                            } catch (IOException ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
+                                            if (!(U.getProfil().equals(null))) {
+                                                profilQ = new Label(URLImage.createToStorage(ec, "http://localhost/mobileshakehub/" + U.getProfil(), "http://localhost/mobileshakehub/" + U.getProfil(), URLImage.RESIZE_SCALE));
+                                            
                                                 profilQ = new Label(Image.createImage(U.getProfil()).scaled(300, 300));
                                             } else {
                                                 profilQ = new Label(Image.createImage("/usericon.png").scaled(300, 300));
@@ -802,23 +820,13 @@ public class ShakeHub {
                     public void actionPerformed(ActionEvent back
                     ) {
                         S.removeAll();
-                        new MenuPrincipal().show();
+                        new MenuPrincipal();
 
                     }
                 }
                 );
         S.show();
     }
-
-
-
-                
-
-            
-        
-
-        
-    
 
     public void stop() {
         current = getCurrentForm();
